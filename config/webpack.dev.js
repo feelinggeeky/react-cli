@@ -21,6 +21,7 @@ module.exports =  merge(common, {
   devServer: {
     // 告诉服务器从哪里提供内容，只有在你想要提供静态文件时才需要。
     static: './dist',
+    hot: true
   },
 })
 
