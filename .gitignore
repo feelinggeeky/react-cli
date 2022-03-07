@@ -328,3 +328,4 @@ $RECYCLE.BIN/
 
 *.lock
 node_modules
+dist

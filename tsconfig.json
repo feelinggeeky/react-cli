@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "noImplicitAny": true,
+    "module": "es6",
+    "target": "es5",
+    "strict": true,//通过启用TypeScript的strict编译器选项，编译器将在最严格的模式下运行，在运行之前捕获更多类型问题。
+    "jsx": "react",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,//强制统一不同操作系统的文件名
+    "importHelpers": true,//通过启用TypeScript的importlpers编译器选项，编译器将使用tslib包，并减少输出的大小
+  }
+}
+//https://webhint.io/docs/user-guide/hints/hint-typescript-config
