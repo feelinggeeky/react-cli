@@ -11,7 +11,38 @@ const PurgeCSSPlugin = require("purgecss-webpack-plugin");
 module.exports = merge(common, {
   mode: "production",
 
-  splitChunks: {
+
+  optimization: {
+    runtimeChunk: true, //运行时代码创建一个额外的 chunk，减少 entry chunk 体积，提高性能。
+    minimize: true, // 开启最小化
+    minimizer: [
+      /// new CssMinimizerPlugin({
+      //   parallel: 4,
+      // }),
+      new TerserPlugin({
+        parallel: 4,
+        terserOptions: {
+          parse: {
+            ecma: 8,
+          },
+          compress: {
+            ecma: 5,
+            warnings: false,
+            comparisons: false,
+            inline: 2,
+          },
+          mangle: {
+            safari10: true,
+          },
+          output: {
+            ecma: 5,
+            comments: false,
+            ascii_only: true,
+          },
+        },
+      }),
+    ],
+   splitChunks: {
     cacheGroups: {
       // 配置提取模块的方案
       default: false,
@@ -43,51 +74,6 @@ module.exports = merge(common, {
       // ... 根据不同项目再细化拆分内容
     },
   },
-  optimization: {
-    runtimeChunk: true, //运行时代码创建一个额外的 chunk，减少 entry chunk 体积，提高性能。
-    minimize: true, // 开启最小化
-    minimizer: [
-      /// new CssMinimizerPlugin({
-      //   parallel: 4,
-      // }),
-      new TerserPlugin({
-        parallel: 4,
-        terserOptions: {
-          parse: {
-            ecma: 8,
-          },
-          compress: {
-            ecma: 5,
-            warnings: false,
-            comparisons: false,
-            inline: 2,
-          },
-          mangle: {
-            safari10: true,
-          },
-          output: {
-            ecma: 5,
-            comments: false,
-            ascii_only: true,
-          },
-        },
-      }),
-    ],
-    splitChunks: {
-      // include all types of chunks
-      chunks: "all",
-      // 重复打包问题
-      cacheGroups: {
-        vendors: {
-          // node_modules里的代码
-          test: /[\\/]node_modules[\\/]/,
-          chunks: "all",
-          // name: 'vendors', 一定不要定义固定的name
-          priority: 10, // 优先级
-          enforce: true,
-        },
-      },
-    },
   },
   plugins: [
     // 打包体积分析
