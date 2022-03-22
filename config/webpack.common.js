@@ -1,4 +1,5 @@
 const paths = require("./paths");
+const webpack = require("webpack");
 const chalk = require("chalk");
 const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -25,6 +26,7 @@ module.exports = {
   resolve: {
     alias: {
       "@": paths.appSrc, // @ 代表 src 路径
+      "@pages*": `${paths.appSrc}/stateless`,
     },
     extensions: [".tsx", ".ts", ".js", "..."],
     modules: ["node_modules", paths.appSrc],
@@ -118,7 +120,7 @@ module.exports = {
     // 生成html，自动引入所有bundle
     new HtmlWebpackPlugin({
       title: "release_v0",
-      template: './public/index.html'
+      template: "./public/index.html",
     }),
     // 为进度百分比添加了加粗和绿色高亮态样式
     new ProgressBarPlugin({

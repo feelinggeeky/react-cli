@@ -11,7 +11,6 @@ const PurgeCSSPlugin = require("purgecss-webpack-plugin");
 module.exports = merge(common, {
   mode: "production",
 
-
   optimization: {
     runtimeChunk: true, //运行时代码创建一个额外的 chunk，减少 entry chunk 体积，提高性能。
     minimize: true, // 开启最小化
@@ -42,38 +41,38 @@ module.exports = merge(common, {
         },
       }),
     ],
-   splitChunks: {
-    cacheGroups: {
-      // 配置提取模块的方案
-      default: false,
-      styles: {
-        name: "styles",
-        test: /\.(s?css|less|sass)$/,
-        chunks: "all",
-        enforce: true,
-        priority: 10,
+    splitChunks: {
+      cacheGroups: {
+        // 配置提取模块的方案
+        default: false,
+        styles: {
+          name: "styles",
+          test: /\.(s?css|less|sass)$/,
+          chunks: "all",
+          enforce: true,
+          priority: 10,
+        },
+        common: {
+          name: "chunk-common",
+          chunks: "all",
+          minChunks: 2,
+          maxInitialRequests: 5, // 最大的按需(异步)加载次数
+          minSize: 0,
+          priority: 1,
+          enforce: true,
+          reuseExistingChunk: true,
+        },
+        vendors: {
+          name: "chunk-vendors",
+          test: /[\\/]node_modules[\\/]/,
+          chunks: "all",
+          priority: 2,
+          enforce: true,
+          reuseExistingChunk: true,
+        },
+        // ... 根据不同项目再细化拆分内容
       },
-      common: {
-        name: "chunk-common",
-        chunks: "all",
-        minChunks: 2,
-        maxInitialRequests: 5, // 最大的按需(异步)加载次数
-        minSize: 0,
-        priority: 1,
-        enforce: true,
-        reuseExistingChunk: true,
-      },
-      vendors: {
-        name: "chunk-vendors",
-        test: /[\\/]node_modules[\\/]/,
-        chunks: "all",
-        priority: 2,
-        enforce: true,
-        reuseExistingChunk: true,
-      },
-      // ... 根据不同项目再细化拆分内容
     },
-  },
   },
   plugins: [
     // 打包体积分析

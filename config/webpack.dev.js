@@ -1,3 +1,4 @@
+const webpack = require("webpack");
 const { merge } = require("webpack-merge");
 const common = require("./webpack.common");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
@@ -5,7 +6,8 @@ const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 const smp = new SpeedMeasurePlugin();
 //配置了 SpeedMeasurePlugin 后，热更新就无效了，会提示 runtime is undefined。
 //解决方案:仅在分析构建速度时打开 SpeedMeasurePlugin 插件，
-module.exports = merge(common, {
+const isNeedSpeed = false
+const config = merge(common, {
   // 开发模式
   mode: "development",
 
@@ -17,6 +19,12 @@ module.exports = merge(common, {
     hot: true,
     port: 8080, // 端口号
     open: true, // 是否自动打开浏览器
+     // proxy: {
+    //   '/api': {
+    //     target: 'http://localhost:3000',
+    //     pathRewrite: { '^/api': '' },
+    //   },
+    // },
   },
 
   plugins: [
