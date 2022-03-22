@@ -4,6 +4,19 @@
     "noImplicitAny": true,
     "module": "es6",
     "target": "es5",
+    "rootDir": "./" /* Specify the root folder within your source files. */,
+    "baseUrl": "./" /* Specify the base directory to resolve non-relative module names. */,
+    "paths": {
+      "@/*": [".src/*"],
+      "@src/*": ["./src/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@routers/*": ["./src/routers/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@stateless/*": ["./src/components/stateless/*"],
+      "@container/*": ["./src/components/container/*"],
+    },
     "strict": true,//通过启用TypeScript的strict编译器选项，编译器将在最严格的模式下运行，在运行之前捕获更多类型问题。
     "jsx": "react",
     "allowJs": true,
@@ -12,6 +25,8 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,//强制统一不同操作系统的文件名
     "importHelpers": true,//通过启用TypeScript的importlpers编译器选项，编译器将使用tslib包，并减少输出的大小
-  }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "static"]
 }
 //https://webhint.io/docs/user-guide/hints/hint-typescript-config
