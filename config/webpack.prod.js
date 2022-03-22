@@ -1,7 +1,7 @@
+const paths = require("./paths");
 const { merge } = require("webpack-merge");
 const common = require("./webpack.common");
 const glob = require("glob");
-const paths = require("./paths");
 // const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const TerserPlugin = require("terser-webpack-plugin");

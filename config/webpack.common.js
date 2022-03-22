@@ -1,49 +1,47 @@
 const paths = require("./paths");
-const chalk = require('chalk')
-const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+const chalk = require("chalk");
+const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ctx = {
-  isEnvDevelopment: process.env.NODE_ENV === 'development',
-  isEnvProduction: process.env.NODE_ENV === 'production',
-}
-const {
-  isEnvDevelopment,
-  isEnvProduction
-} = ctx
+  isDev: process.env.NODE_ENV === "development",
+  isProd: process.env.NODE_ENV === "production",
+};
+const { isDev, isProd } = ctx;
 
 module.exports = {
   // 入口
   entry: {
     index: "./src/index.tsx",
   },
-   // 输出
-   output: {
+  // 输出
+  output: {
     // 仅在生产环境添加 hash
-    filename: ctx.isEnvProduction ? '[name].[contenthash].bundle.js' : '[name].bundle.js',
+    filename: isProd ? "[name].[contenthash].bundle.js" : "[name].bundle.js",
     path: paths.appDist,
     // 编译前清除目录
     clean: true,
   },
   resolve: {
-      alias: {
-        '@': paths.appSrc, // @ 代表 src 路径
-      },
-      extensions: ['.tsx', '.ts', '.js', '...'], 
-      modules: ['node_modules', paths.appSrc],
-      symlinks: false,
+    alias: {
+      "@": paths.appSrc, // @ 代表 src 路径
+    },
+    extensions: [".tsx", ".ts", ".js", "..."],
+    modules: ["node_modules", paths.appSrc],
+    symlinks: false,
   },
   cache: {
-    type: 'filesystem', // 使用文件缓存
+    type: "filesystem", // 使用文件缓存
   },
   externals: {
-    jquery: 'jQuery',
+    jquery: "jQuery",
   },
   module: {
     rules: [
       {
         test: /\.(js|ts|jsx|tsx)$/,
         include: paths.appSrc,
+        exclude: /node_modules/,
         use: [
           {
             loader: "esbuild-loader",
@@ -58,9 +56,7 @@ module.exports = {
         test: /\.css$/,
         include: paths.appSrc,
         use: [
-          // 将 JS 字符串生成为 style 节点
-          "style-loader",
-          // 将 CSS 转化成 CommonJS 模块
+          isDev ? "style-loader" : MiniCssExtractPlugin.loader,
           "css-loader",
         ],
       },
@@ -68,9 +64,7 @@ module.exports = {
         test: /\.module\.(scss|sass)$/,
         include: paths.appSrc,
         use: [
-          // 将 JS 字符串生成为 style 节点
-          "style-loader",
-          isEnvProduction && MiniCssExtractPlugin.loader,
+          isDev ? "style-loader" : MiniCssExtractPlugin.loader,
           // 将 CSS 转化成 CommonJS 模块
           {
             loader: "css-loader",
@@ -98,10 +92,10 @@ module.exports = {
             },
           },
           {
-            loader: 'thread-loader',
+            loader: "thread-loader",
             options: {
-              workerParallelJobs: 2 // 当使用 thread-loader 时，需要设置 workerParallelJobs: 2。
-            }
+              workerParallelJobs: 2, // 当使用 thread-loader 时，需要设置 workerParallelJobs: 2。
+            },
           },
           // 将 Sass 编译成 CSS
           "sass-loader",
@@ -124,10 +118,11 @@ module.exports = {
     // 生成html，自动引入所有bundle
     new HtmlWebpackPlugin({
       title: "release_v0",
+      template: './public/index.html'
     }),
     // 为进度百分比添加了加粗和绿色高亮态样式
     new ProgressBarPlugin({
-      format: `  :msg [:bar] ${chalk.green.bold(':percent')} (:elapsed s)`
+      format: `  :msg [:bar] ${chalk.green.bold(":percent")} (:elapsed s)`,
     }),
   ],
 };
