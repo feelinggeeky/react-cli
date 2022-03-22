@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Webpack 5",
   "main": "index.js",
+  "sideEffects": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack serve --open --config config/webpack.dev.js",
     "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js",
@@ -24,9 +25,11 @@
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.4",
+    "@types/loadable__component": "^5.13.4",
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.13",
     "@types/react-router-dom": "^5.3.3",
+    "@types/redux-logger": "^3.0.9",
     "babel-loader": "^8.2.3",
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.0",
@@ -42,6 +45,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-refresh": "^0.11.0",
+    "redux-logger": "^3.0.6",
     "sass": "^1.49.9",
     "sass-loader": "^12.6.0",
     "speed-measure-webpack-plugin": "^1.5.0",
@@ -55,9 +59,16 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "@loadable/component": "^5.15.2",
+    "@welldone-software/why-did-you-render": "^6.2.3",
+    "antd": "^4.19.3",
     "axios": "^0.26.1",
     "dayjs": "^1.11.0",
     "lodash": "^4.17.21",
-    "react-router-dom": "^6.2.2"
+    "qs": "^6.10.3",
+    "query-string": "^7.1.1",
+    "react-redux": "^7.2.6",
+    "react-router-dom": "^6.2.2",
+    "redux": "^4.1.2"
   }
 }
